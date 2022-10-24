@@ -1,12 +1,164 @@
 <!DOCTYPE html>
 <html>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        //CLASSES
+        class Ingredient{
+            constructor(_id,_name,_imgUrl,_calories){
+                this.id= _id
+                this.name= _name
+                this.imgUrl= _imgUrl
+                this.calories= _calories
+                this.render = () =>{
+                    return(
+                        `<div>
+                            <p>id: ${this.id}</p>
+                            <p>name: ${this.name}</p>
+                            <p>imgUrl: ${this.imgUrl}</p>
+                            <p>calories: ${this.calories}</p>
+                        </div>`
+                    )
+                }
+            } 
+        }
+
+        class dishRecipe{
+            constructor(_name,_ingredients,_time,_cookingMethod,_img){
+                this.name= _name
+                this.ingredients= _ingredients
+                this.time= _cookingMethod
+                this.img= _img
+                this.render = () =>{
+                    return(
+                        `<div>
+                            <p>name: ${this.name}</p>
+                            <p>ingredients: ${this.ingredients}</p>
+                            <p>time: ${this.time}</p>
+                            <p>img: ${this.img}</p>
+                        </div>`
+                    )
+                }
+            }
+            getCalories= ()=>{
+                let calories= 0
+                this.ingredients.map((value)=> calories+= value.calories)
+                return calories;
+            }
+            getIngredients= ()=>{
+                this.ingredients.map((value)=> console.log(value))
+            }              
+        }
+
+        //INITIALIZATION
+        const salt= new Ingredient(1,'salt','string', 54)
+        const brocolli= new Ingredient(2, 'brocolli', 'string', 11)
+
+        const SB= new dishRecipe('sb', [salt,brocolli], 5, 'string', 'string')
+
+        
+        const load= ()=>{
+            let calories= SB.getCalories()
+            console.log(calories)
+            SB.getIngredients()
+        }
+
+        const cancel= ()=>{
+            $('#forms').empty()
+        }
+
+        const createIngredient= ()=>{
+            const details= $('.ingredients')
+            let ingredients= JSON.parse(localStorage.getItem('ingredients'))
+            if(!ingredients){
+                ingredients=[]
+                const ingredient= new Ingredient(1, details[0].value, details[1].value, details[2].value)
+                ingredients.push(ingredient)
+                localStorage.setItem('ingredients', JSON.stringify(ingredients))
+            } else{
+                const ingredient= new Ingredient(ingredients[ingredients.length], details[0].value, details[1].value, details[2].value)
+                ingredients.push(ingredient)
+                localStorage.setItem('ingredients', JSON.stringify(ingredients))
+            }
+
+        }
+
+        const showIngredients= ()=>{
+            let ingredients= JSON.parse(localStorage.getItem('ingredients'))
+            return (
+                ingredients.map((value)=>{
+                    return (
+                        `<div>
+                            <p>id: ${value.id}</p>
+                            <p>name: ${value.name}</p>
+                            <p>imgUrl: ${value.imgUrl}</p>
+                            <p>calories: ${value.calories}</p>
+                        </div>`
+                    )
+                })
+            )
+        }
+        
+        const displayForm= (sender)=>{
+            if(sender === 'newRecipe'){
+                $('#forms').empty()
+                $('#forms').append(
+                    `<div>
+                        <label>Recipe name:</label>
+                        <br></br>
+                        <input placeholder='Enter recipe name'></input>
+                        <br></br>
+                        <label>Recipe cooking method:</label>
+                        <br></br>
+                        <input placeholder='Enter cooking method'></input>
+                        <br></br>
+                        <label>Recipe cooking time:</label>
+                        <br></br>
+                        <input placeholder='Enter cooking time'></input>
+                        <br></br>
+                        <label>Recipe image:</label>
+                        <br></br>
+                        <input placeholder='Enter recipe image url'></input>
+                        <br></br>
+                        <h3>Choose ingredients:</h3>
+                        ${showIngredients()}
+                    </div>`
+                )
+            } else{
+                $('#forms').empty()
+                $('#forms').append(
+                    `<div>
+                        <label>Ingredient name:</label>
+                        <br></br>
+                        <input class= 'ingredients' placeholder='Enter ingredient name'></input>
+                        <br></br>
+                        <label>Ingredient image:</label>
+                        <br></br>
+                        <input class= 'ingredients' placeholder='Enter ingredient image url'></input>
+                        <br></br>
+                        <label>Ingredient calories:</label>
+                        <br></br>
+                        <input class= 'ingredients' placeholder='Enter ingredient calories'></input>
+                        <br></br>
+                        <button onclick="createIngredient()">Create</button>
+                        <button onclick="cancel()">Cancel</button>
+                    </div>`
+                )
+            }
+        }
+
+    </script>
+
     <head>
         <title>My Page</title>
-
     </head>
-    
     <body>
-        
-        <p>try</p>
+        <div id='container'>
+            <h1>Dishes- Liel Nagar and Daniel Lev Ari</h1>
+            <button onclick="displayForm('newRecipe')">Add new recipe</button>
+            <button onclick="displayForm('newIngredient')">Add new ingredient</button>
+            <div id="forms">
+
+            </div>
+        </div>
     </body>
 </html>
