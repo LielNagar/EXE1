@@ -50,17 +50,17 @@
         }
 
         //INITIALIZATION
-        const salt= new Ingredient(1,'salt','string', 54)
-        const brocolli= new Ingredient(2, 'brocolli', 'string', 11)
+        // const salt= new Ingredient(1,'salt','string', 54)
+        // const brocolli= new Ingredient(2, 'brocolli', 'string', 11)
 
-        const SB= new dishRecipe('sb', [salt,brocolli], 5, 'string', 'string')
+        // const SB= new dishRecipe('sb', [salt,brocolli], 5, 'string', 'string')
 
         
-        const load= ()=>{
-            let calories= SB.getCalories()
-            console.log(calories)
-            SB.getIngredients()
-        }
+        // const load= ()=>{
+        //     let calories= SB.getCalories()
+        //     console.log(calories)
+        //     SB.getIngredients()
+        // }
 
         const cancel= ()=>{
             $('#forms').empty()
@@ -79,7 +79,6 @@
                 ingredients.push(ingredient)
                 localStorage.setItem('ingredients', JSON.stringify(ingredients))
             }
-
         }
 
         const showIngredients= ()=>{
@@ -145,7 +144,6 @@
                 )
             }
         }
-
     </script>
 
     <head>
