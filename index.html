@@ -85,12 +85,11 @@
                 this.calories= _calories
                 this.render = () =>{
                     return(
-                        `<div>
+                        `<div class= 'IngredientDiv'>
                             <p>id: ${this.id}</p>
                             <p>name: ${this.name}</p>
                             <p>imgUrl: ${this.imgUrl}</p>
-                            <p>calories: ${this.calories}</p>
-                        </div>`
+                            <p>calories: ${this.calories}</p>`
                     )
                 }
             } 
@@ -105,11 +104,14 @@
                 this.img= _img
                 this.render = () =>{
                     return(
-                        `<div>
+                        `<div class= 'dish'>
+                            <h4>Dish recipe details:</h4>
+                            <p>imgUrl: ${this.img}</p>
                             <p>name: ${this.name}</p>
-                            <p>ingredients: ${this.ingredients}</p>
-                            <p>time: ${this.time}</p>
-                            <p>img: ${this.img}</p>
+                            <p>Cooking method: ${this.cookingMethod}</p>
+                            <p>Total cooking time in minutes: ${this.time}</p>
+                            <p>Total calories: ${this.getCalories()}</p>
+                            <button class="button-30" onclick="showDishIngredients()">Show Ingredients</button>
                         </div>`
                     )
                 }
@@ -183,13 +185,10 @@
             let ingredients= JSON.parse(localStorage.getItem('ingredients'))
             return (
                 ingredients.map((value)=>{
+                    value = new Ingredient(value.id, value.name, value.imgUrl, value.calories)
                     return (
-                        `<div class= "IngredientDiv">
-                            <p>id: ${value.id}</p>
-                            <p>name: ${value.name}</p>
-                            <p>imgUrl: ${value.imgUrl}</p>
-                            <p>calories: ${value.calories}</p>
-                            <br></br>
+                        value.render() +
+                        `<br></br>
                             <label>Add: </label>
                             <input class= 'recipeCB' type= 'checkbox'></input>
                         </div>`
@@ -272,15 +271,7 @@
             dishes.map((dish)=>{
                 dish= new dishRecipe(dish.name, dish.ingredients, dish.time, dish.cookingMethod, dish.img)
                 dishesDiv.append(
-                    `<div class="dish">
-                        <h4>Dish recipe details:</h4>
-                        <p>imgUrl: ${dish.img}</p>
-                        <p>dish name: ${dish.img}</p>
-                        <p>cooking method: ${dish.img}</p>
-                        <p>total cooking time in minutes: ${dish.img}</p>
-                        <p>total calories: ${dish.getCalories()}</p>
-                        <button class="button-30" onclick="showDishIngredients()">Show Ingredients</button>
-                    </div>`
+                    dish.render()
                 )
             })
         }
