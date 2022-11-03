@@ -15,7 +15,7 @@
 
 
 
-    #IngredientDiv {
+    .IngredientDiv {
         /* display:inline-block; */
         /* margin: 5px; */
 
@@ -87,7 +87,7 @@
             this.calories = _calories
             this.render = () => {
                 return (
-                    `<div class='col-md-4' id= 'IngredientDiv'>
+                    `<div class='IngredientDiv col-md-4'>
                             <p>id: ${this.id}</p>
                             <p>name: ${this.name}</p>
                             <img src='${this.imgUrl}'></img>
@@ -109,7 +109,7 @@
             this.img = _img
             this.render = () => {
                 let dish = this
-                let html = '<div class= "dish" class= "col-md-4"><img src=' + this.img + '><p>name: ' + this.name + '</p><p>Cooking method: ' + this.cookingMethod +
+                let html = '<div class= "dish col-sm-8 col-md-6 col-lg-3"><img src=' + this.img + '><p>name: ' + this.name + '</p><p>Cooking method: ' + this.cookingMethod +
                     '</p><p>Total cooking time in minutes: ' + this.time + '</p><p>Total calories: ' + this.getCalories() + '</p><button class="button-30" onclick="showDishIngredients(' + i++ + ')">Show Ingredients</button></div>'
                 return (
                     html
